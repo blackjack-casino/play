@@ -1,0 +1,89 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #2E7D32;
+    color: white;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.game-container {
+    margin: 2% auto; /* Reduced margin to bring it closer to the top */
+    padding: 20px;
+    border: 2px solid #fff;
+    border-radius: 15px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.card-area {
+    margin: 20px 0;
+}
+
+.cards {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100px; /* Adjust height for card sprites */
+}
+
+.bank h1 {
+    color: yellow;
+    font-size: larger;
+}
+
+.card {
+    width: 70px; /* Adjust width for card sprites */
+    height: 100px; /* Adjust height for card sprites */
+    margin: 0 5px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0; /* Start hidden for animation */
+    animation: fadeIn 0.5s forwards; /* Animation for card addition */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px); /* Slightly lift the card */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* Position the card normally */
+    }
+}
+
+.board {
+    height: 5px; /* Height of the board */
+    background-color: white; /* Color of the board */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Drop shadow */
+    margin: 20px 0; /* Space around the board */
+}
+
+.controls {
+    margin: 20px 0;
+}
+
+input[type="number"] {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 5px;
+    border: none;
+}
+
+button {
+    padding: 10px 15px;
+    margin: 5px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #45a049;
+}
