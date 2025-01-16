@@ -18,7 +18,7 @@ function initializeDeck() {
         '7H', '7D', '7C', '7S',
         '8H', '8D', '8C', '8S',
         '9H', '9D', '9C', '9S',
-        'JH', 'QD', 'KC', 'AS',
+        'JH', 'QD', 'KC', 'QS',
         'JH', 'JD', 'JC', 'JS',
         'QH', 'QD', 'QC', 'QS',
         'KH', 'KD', 'KC', 'KS',
@@ -114,6 +114,7 @@ function checkForBlackjack(hand) {
 // Function to reset the game
 function resetGame() {
     // Show the bet input and start button
+    document.getElementById('all-in').style.display = 'inline-block';
     document.getElementById('bet-input').style.display = 'inline-block';
     document.getElementById('start-button').style.display = 'inline-block';
 
@@ -145,6 +146,7 @@ function startGame() {
     }
 
     // Hide the bet input and start button
+    document.getElementById('all-in').style.display = 'none';
     document.getElementById('bet-input').style.display = 'none';
     document.getElementById('start-button').style.display = 'none';
 
@@ -166,26 +168,6 @@ function startGame() {
     setupDealerCards();
 
     enableButtons();
-
-    // Check for Blackjack
-    // if (checkForBlackjack(playerHand)) {
-    //     disableButtons();
-    //     revalDealerCards();
-
-    //     // Adjust Blackjack payout
-    //     const blackjackPayout = betAmount * 1.5 * 0.993; // 0.7% house advantage
-    //     document.getElementById('result').innerText = `Blackjack! You win $${blackjackPayout.toFixed(2)}!`;
-    //     addMoney(blackjackPayout);
-    //     resetGame();
-    //     return;
-    // } else if (checkForBlackjack(dealerHand)) {
-    //     disableButtons();
-    //     revalDealerCards();
-    //     document.getElementById('result').innerText = 'Dealer has Blackjack! Dealer wins.';
-    //     subtractMoney(betAmount);
-    //     resetGame();
-    //     return;
-    // }
 }
 
 function displayResult() {
@@ -213,8 +195,6 @@ function displayResult() {
 
     document.getElementById('result').innerText = resultMessage;
 
-    // Call resetGame after a short delay to allow the user to see the result
-    console.log('reseting game')
     setTimeout(resetGame, 3000); // Adjust the delay as needed
 }
 
@@ -243,7 +223,6 @@ function revealCards() {
         revalDealerCards();
         document.getElementById('result').innerText = 'Blackjack! You win!';
         addMoney(betAmount);
-        console.log('reseting game')
         setTimeout(resetGame, 3000); // Adjust the delay as needed
         return;
     } else if (calculateScore(dealerHand) == 21) {
@@ -251,7 +230,6 @@ function revealCards() {
         revalDealerCards();
         document.getElementById('result').innerText = 'Dealer has Blackjack! Dealer wins.';
         subtractMoney(betAmount);
-        console.log('reseting game')
         setTimeout(resetGame, 3000); // Adjust the delay as needed
         return;
     }
@@ -383,4 +361,43 @@ document.getElementById('surrender').addEventListener('click', () => {
 
 document.getElementById('bet-input').addEventListener('input', (event) => {
     betAmount = parseFloat(event.target.value) || 0;
+});
+
+document.getElementById('all-in').addEventListener('click', () => {
+    betAmount = bank;
+     // Hide the bet input and start button
+     document.getElementById('all-in').style.display = 'none';
+     document.getElementById('bet-input').style.display = 'none';
+     document.getElementById('start-button').style.display = 'none';
+ 
+     disableButtons();
+ 
+     // Show the bet amount
+     document.getElementById('bet-display').innerText = `You bet: $${betAmount}`;
+ 
+     // Shuffle the deck
+     shuffleDeck(deck, deckValue);
+ 
+     playerHand = [];
+     dealerHand = [];
+     dealCard(playerHand, playerValue);
+     dealCard(dealerHand, dealerValue);
+     dealCard(playerHand, playerValue);
+     dealCard(dealerHand, dealerValue);
+     revealCards();
+     setupDealerCards();
+ 
+     enableButtons();
+});
+
+document.getElementById('dynamicButton').addEventListener('click', function(event) {
+    event.preventDefault(); // Prevent default anchor behavior
+
+    // Add logic to decide which link to open
+    const randomChoice = Math.random() < 0.5; // 50% chance
+    const link = randomChoice 
+        ? "https://www.youtube.com/watch?v=dQw4w9WgXcQ" // First link
+        : "https://www.youtube.com/watch?v=At8v_Yc044Y"; // Second link
+
+    window.location.href = link; // Redirect to the chosen link
 });
